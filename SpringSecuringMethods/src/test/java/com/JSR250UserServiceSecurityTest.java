@@ -16,15 +16,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.config.SecuredConfig;
+import com.config.JSR250Config;
 import com.domain.Message;
 import com.domain.WebUser;
 import com.service.MessageService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=SecuredConfig.class)
+@ContextConfiguration(classes=JSR250Config.class)
 
-public class SecuredUserServiceSecurityTest {
+public class JSR250UserServiceSecurityTest {
 	@Autowired
 	MessageService messageService;
 	
