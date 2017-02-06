@@ -1,13 +1,12 @@
 package com;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -57,6 +56,24 @@ public class SecuredUserServiceSecurityTest {
 	public void role_user() {
 		setupUser("ROLE_USER");
 		
+		WebUser from = new WebUser("user_a");
+		WebUser to = new WebUser("user_b");
+		messageService.sendMessage(new Message(from, to, "ZZZ"));
+	}
+	
+	@Test(expected=AccessDeniedException.class)
+	public void role_wrong_user() {
+		setupUser("ROLE_USER");
+		
+		WebUser from = new WebUser("user_c");
+		WebUser to = new WebUser("user_b");
+		messageService.sendMessage(new Message(from, to, "ZZZ"));
+	}	
+	
+	@Test(expected=AccessDeniedException.class)
+	public void role_moderator() {
+		setupUser("ROLE_MODERATOR");
+
 		WebUser from = new WebUser("user_a");
 		WebUser to = new WebUser("user_b");
 		messageService.sendMessage(new Message(from, to, "ZZZ"));
